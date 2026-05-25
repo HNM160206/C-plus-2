@@ -3,7 +3,7 @@
 #include <iomanip>
 using namespace std;
 
-void printArray(vector<int> a)
+void printArray(const vector<int>& a)
 {
     for (int x : a)
         cout << setw(4) << x;
@@ -17,6 +17,16 @@ void heapify(vector<int>& a, int n, int i)
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
+    cout << "\nHeapify nut i = " << i << endl;
+
+    if (left < n)
+        cout << "Con trai  a[" << left << "] = "
+             << a[left] << endl;
+
+    if (right < n)
+        cout << "Con phai  a[" << right << "] = "
+             << a[right] << endl;
+
     if (left < n && a[left] > a[largest])
         largest = left;
 
@@ -25,12 +35,25 @@ void heapify(vector<int>& a, int n, int i)
 
     if (largest != i)
     {
+        cout << "Doi "
+             << a[i]
+             << " va "
+             << a[largest]
+             << endl;
+
         swap(a[i], a[largest]);
 
-        // In trạng thái sau mỗi lần đổi khi vun đống
+        cout << "Trang thai hien tai:\n";
         printArray(a);
 
         heapify(a, n, largest);
+    }
+    else
+    {
+        cout << "Khong can doi\n";
+
+        cout << "Trang thai hien tai:\n";
+        printArray(a);
     }
 }
 
@@ -38,35 +61,48 @@ void heapSort(vector<int>& a)
 {
     int n = a.size();
 
-    cout << "\n===== CAC BUOC VUN DONG =====\n";
+    cout << "\n========================\n";
+    cout << "      VUN DONG\n";
+    cout << "========================\n";
 
-    // Build Max Heap
+    // Build Heap
     for (int i = n / 2 - 1; i >= 0; i--)
     {
+        cout << "\n--- Heapify tai i = "
+             << i
+             << " ---\n";
+
         heapify(a, n, i);
 
-        // Trạng thái sau mỗi bước heapify
+        cout << "Sau heapify i = "
+             << i
+             << ":\n";
+
         printArray(a);
     }
 
-    cout << "\n===== CAC BUOC SAP XEP =====\n";
+    cout << "\n========================\n";
+    cout << "      SAP XEP\n";
+    cout << "========================\n";
 
     // Heap Sort
     for (int i = n - 1; i > 0; i--)
     {
-        // Đưa max xuống cuối
+        cout << "\nDua max "
+             << a[0]
+             << " xuong cuoi\n";
+
         swap(a[0], a[i]);
 
-        // In trạng thái sau khi đổi
+        cout << "Sau khi doi:\n";
         printArray(a);
 
-        // Vun lại heap
+        cout << "\nVun lai heap:\n";
+
         heapify(a, i, 0);
 
-        // In trạng thái sau khi vun lại
+        cout << "Mang sau khi vun lai:\n";
         printArray(a);
-
-        cout << endl;
     }
 }
 
@@ -89,7 +125,8 @@ int main()
 
     heapSort(a);
 
-    cout << "\nMang sau khi sap xep:\n";
+    cout << "\n========================\n";
+    cout << "Mang sau khi sap xep:\n";
     printArray(a);
 
     return 0;
