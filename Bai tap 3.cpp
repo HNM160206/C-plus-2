@@ -1,24 +1,26 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <iomanip>
 using namespace std;
 
-void printArray(const vector<int>& a, string msg)
+void printArray(const vector<string>& a, string msg)
 {
-    cout << left << setw(35) << msg;
+    cout << left << setw(30) << msg;
 
-    for (int x : a)
+    for (string x : a)
         cout << x << " ";
 
     cout << endl;
 }
 
-void heapify(vector<int>& a, int n, int i)
+void heapify(vector<string>& a, int n, int i)
 {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
+    // So sánh từ điển
     if (left < n && a[left] > a[largest])
         largest = left;
 
@@ -27,59 +29,72 @@ void heapify(vector<int>& a, int n, int i)
 
     if (largest != i)
     {
+        cout << "Doi "
+             << a[i]
+             << " va "
+             << a[largest]
+             << endl;
+
         swap(a[i], a[largest]);
 
-        printArray(a,
-            "Sau khi doi " + to_string(a[largest]) +
-            " va " + to_string(a[i]) + ":");
+        printArray(a, "Trang thai:");
 
         heapify(a, n, largest);
     }
 }
 
-void heapSort(vector<int>& a)
+void heapSort(vector<string>& a)
 {
     int n = a.size();
 
-    cout << "===== QUA TRINH VUN DONG =====" << endl;
+    cout << "===== VUN DONG =====" << endl;
 
-    // Build heap
+    // Build Heap
     for (int i = n / 2 - 1; i >= 0; i--)
     {
+        cout << "\nHeapify i = " << i << endl;
+
         heapify(a, n, i);
 
-        printArray(a,
-            "Trang thai sau heapify i=" + to_string(i) + ":");
+        printArray(a, "Sau heapify:");
     }
 
-    cout << endl;
-    cout << "===== QUA TRINH SAP XEP =====" << endl;
+    cout << "\n===== SAP XEP =====" << endl;
 
-    // Heap sort
+    // Heap Sort
     for (int i = n - 1; i > 0; i--)
     {
+        cout << "\nDoi max "
+             << a[0]
+             << " voi "
+             << a[i]
+             << endl;
+
         swap(a[0], a[i]);
 
-        printArray(a,
-            "Doi max xuong cuoi:");
+        printArray(a, "Sau doi:");
 
         heapify(a, i, 0);
 
-        printArray(a,
-            "Sau khi vun lai heap:");
-
-        cout << endl;
+        printArray(a, "Sau vun lai:");
     }
 }
 
 int main()
 {
-    vector<int> a = {4, 10, 3, 5, 1};
+    vector<string> a =
+    {
+        "32", "51", "27", "83", "96",
+        "11", "45", "75", "66"
+    };
 
     printArray(a, "Mang ban dau:");
+
     cout << endl;
 
     heapSort(a);
+
+    cout << endl;
 
     printArray(a, "Mang sau cung:");
 
