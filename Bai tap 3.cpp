@@ -3,12 +3,10 @@
 #include <iomanip>
 using namespace std;
 
-void printArray(const vector<int>& a, string msg)
+void printArray(vector<int> a)
 {
-    cout << left << setw(30) << msg;
-
     for (int x : a)
-        cout << x << " ";
+        cout << setw(4) << x;
 
     cout << endl;
 }
@@ -27,15 +25,10 @@ void heapify(vector<int>& a, int n, int i)
 
     if (largest != i)
     {
-        cout << "Doi "
-             << a[i]
-             << " va "
-             << a[largest]
-             << endl;
-
         swap(a[i], a[largest]);
 
-        printArray(a, "Trang thai:");
+        // In trạng thái sau mỗi lần đổi khi vun đống
+        printArray(a);
 
         heapify(a, n, largest);
     }
@@ -45,36 +38,35 @@ void heapSort(vector<int>& a)
 {
     int n = a.size();
 
-    cout << "\n===== VUN DONG =====" << endl;
+    cout << "\n===== CAC BUOC VUN DONG =====\n";
 
-    // Build Heap
+    // Build Max Heap
     for (int i = n / 2 - 1; i >= 0; i--)
     {
-        cout << "\nHeapify i = " << i << endl;
-
         heapify(a, n, i);
 
-        printArray(a, "Sau heapify:");
+        // Trạng thái sau mỗi bước heapify
+        printArray(a);
     }
 
-    cout << "\n===== SAP XEP =====" << endl;
+    cout << "\n===== CAC BUOC SAP XEP =====\n";
 
     // Heap Sort
     for (int i = n - 1; i > 0; i--)
     {
-        cout << "\nDoi max "
-             << a[0]
-             << " voi "
-             << a[i]
-             << endl;
-
+        // Đưa max xuống cuối
         swap(a[0], a[i]);
 
-        printArray(a, "Sau doi:");
+        // In trạng thái sau khi đổi
+        printArray(a);
 
+        // Vun lại heap
         heapify(a, i, 0);
 
-        printArray(a, "Sau vun lai:");
+        // In trạng thái sau khi vun lại
+        printArray(a);
+
+        cout << endl;
     }
 }
 
@@ -92,15 +84,13 @@ int main()
     for (int i = 0; i < n; i++)
         cin >> a[i];
 
-    cout << endl;
-
-    printArray(a, "Mang ban dau:");
+    cout << "\nMang ban dau:\n";
+    printArray(a);
 
     heapSort(a);
 
-    cout << endl;
-
-    printArray(a, "Mang da sap xep:");
+    cout << "\nMang sau khi sap xep:\n";
+    printArray(a);
 
     return 0;
 }
