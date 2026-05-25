@@ -1,26 +1,24 @@
 #include <iostream>
 #include <vector>
-#include <string>
 #include <iomanip>
 using namespace std;
 
-void printArray(const vector<string>& a, string msg)
+void printArray(const vector<int>& a, string msg)
 {
     cout << left << setw(30) << msg;
 
-    for (string x : a)
+    for (int x : a)
         cout << x << " ";
 
     cout << endl;
 }
 
-void heapify(vector<string>& a, int n, int i)
+void heapify(vector<int>& a, int n, int i)
 {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    // So sánh từ điển
     if (left < n && a[left] > a[largest])
         largest = left;
 
@@ -43,11 +41,11 @@ void heapify(vector<string>& a, int n, int i)
     }
 }
 
-void heapSort(vector<string>& a)
+void heapSort(vector<int>& a)
 {
     int n = a.size();
 
-    cout << "===== VUN DONG =====" << endl;
+    cout << "\n===== VUN DONG =====" << endl;
 
     // Build Heap
     for (int i = n / 2 - 1; i >= 0; i--)
@@ -82,21 +80,27 @@ void heapSort(vector<string>& a)
 
 int main()
 {
-    vector<string> a =
-    {
-        "32", "51", "27", "83", "96",
-        "11", "45", "75", "66"
-    };
+    int n;
 
-    printArray(a, "Mang ban dau:");
+    cout << "Nhap so phan tu: ";
+    cin >> n;
+
+    vector<int> a(n);
+
+    cout << "Nhap day so:\n";
+
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
     cout << endl;
+
+    printArray(a, "Mang ban dau:");
 
     heapSort(a);
 
     cout << endl;
 
-    printArray(a, "Mang sau cung:");
+    printArray(a, "Mang da sap xep:");
 
     return 0;
 }
