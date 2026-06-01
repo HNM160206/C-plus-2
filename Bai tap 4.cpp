@@ -17,53 +17,43 @@ Node* createNode(int x) {
     return p;
 }
 
-// B2: Thêm nút vào BST
+// Thêm nút vào BST
 Node* insert(Node* root, int x) {
     if (root == NULL)
         return createNode(x);
-
     if (x < root->data)
         root->left = insert(root->left, x);
     else if (x > root->data)
         root->right = insert(root->right, x);
-
     return root;
 }
 
-// B3: Tìm kiếm trên BST
+// Tìm kiếm trên BST
 Node* searchBST(Node* root, int x) {
     if (root == NULL || root->data == x)
         return root;
-
     if (x < root->data)
         return searchBST(root->left, x);
-
     return searchBST(root->right, x);
 }
 
 int main() {
-
     int a[] = {2001, 2002, 2006, 2007, 2003,
                2004, 2005, 2001, 1999, 2004};
-
     int n = sizeof(a) / sizeof(a[0]);
 
-    // B1: Dựng cây BST
+    // Dựng cây BST
     Node* root = NULL;
-
     for (int i = 0; i < n; i++) {
         root = insert(root, a[i]);
     }
 
-    // B3: Tìm kiếm năm sinh 2004
+    // Tìm kiếm năm sinh 2004
     int x = 2004;
-
     Node* p = searchBST(root, x);
-
     if (p != NULL)
         cout << "Tim thay nam sinh " << x;
     else
         cout << "Khong tim thay nam sinh " << x;
-
     return 0;
 }
