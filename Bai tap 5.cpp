@@ -34,13 +34,10 @@ Node* createNode(int x) {
 Node* rightRotate(Node *y) {
     Node *x = y->left;
     Node *T2 = x->right;
-
     x->right = y;
     y->left = T2;
-
     y->height = maxx(height(y->left), height(y->right)) + 1;
     x->height = maxx(height(x->left), height(x->right)) + 1;
-
     return x;
 }
 
@@ -48,13 +45,10 @@ Node* rightRotate(Node *y) {
 Node* leftRotate(Node *x) {
     Node *y = x->right;
     Node *T2 = y->left;
-
     y->left = x;
     x->right = T2;
-
     x->height = maxx(height(x->left), height(x->right)) + 1;
     y->height = maxx(height(y->left), height(y->right)) + 1;
-
     return y;
 }
 
@@ -67,22 +61,16 @@ int getBalance(Node *p) {
 
 // B2: Thêm nút vào AVL
 Node* insert(Node *root, int key) {
-
     if (root == NULL)
         return createNode(key);
-
     if (key < root->key)
         root->left = insert(root->left, key);
-
     else if (key > root->key)
         root->right = insert(root->right, key);
-
     else
         return root;
-
     root->height = 1 + maxx(height(root->left),
                             height(root->right));
-
     int balance = getBalance(root);
 
     // LL
@@ -104,7 +92,6 @@ Node* insert(Node *root, int key) {
         root->right = rightRotate(root->right);
         return leftRotate(root);
     }
-
     return root;
 }
 
@@ -136,13 +123,10 @@ void postorder(Node *root) {
 }
 
 int main() {
-
     // B1: Dựng cây AVL
     int a[] = {32, 51, 27, 83, 96, 11, 45, 75, 66};
     int n = sizeof(a) / sizeof(a[0]);
-
     Node *root = NULL;
-
     for (int i = 0; i < n; i++) {
         root = insert(root, a[i]);
     }
@@ -150,12 +134,9 @@ int main() {
     // B3: Duyệt cây
     cout << "NLR (Preorder): ";
     preorder(root);
-
     cout << "\nLNR (Inorder): ";
     inorder(root);
-
     cout << "\nLRN (Postorder): ";
     postorder(root);
-
     return 0;
 }
