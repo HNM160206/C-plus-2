@@ -34,7 +34,6 @@ void InMaTran(int a[MAX][MAX],int n){
     for(int i=0;i<n;i++)
         cout<<setw(5)<<TenTinh[i];
     cout<<endl;
-
     for(int i=0;i<n;i++){
         cout<<setw(5)<<TenTinh[i];
         for(int j=0;j<n;j++)
@@ -46,35 +45,26 @@ void Dijkstra(DoThi g){
     int d[MAX];
     int truoc[MAX];
     bool chon[MAX];
-
     for(int i=0;i<g.n;i++){
         d[i]=VC;
         truoc[i]=-1;
         chon[i]=false;
     }
-     int xp=9;      // Hoa Binh
+    int xp=9;      // Hoa Binh
     int dich=4;    // Uong Bi
-
     d[xp]=0;
-
     while(true){
-
         int u=-1;
         int Min=VC;
-
         for(int i=0;i<g.n;i++){
             if(!chon[i] && d[i]<Min){
                 Min=d[i];
                 u=i;
             }
         }
-
         if(u==-1) break;
-
         chon[u]=true;
-
         if(u==dich) break;
-
         for(int v=0;v<g.n;v++){
             if(g.a[u][v]>0 && !chon[v]){
                 if(d[v] > d[u]+g.a[u][v]){
@@ -83,9 +73,7 @@ void Dijkstra(DoThi g){
                 }
             }
         }
-
         cout<<"\nChon dinh "<<TenTinh[u]<<endl;
-
         cout<<"Khoang cach: ";
         for(int i=0;i<g.n;i++){
             if(d[i]==VC) cout<<"INF ";
@@ -93,45 +81,32 @@ void Dijkstra(DoThi g){
         }
         cout<<endl;
     }
-
     cout<<"\nDuong di ngan nhat:\n";
-
     int stack[MAX];
     int top=0;
-
     int x=dich;
-
     while(x!=-1){
         stack[top++]=x;
         x=truoc[x];
     }
-
     for(int i=top-1;i>=0;i--){
         cout<<TenTinh[stack[i]];
         if(i) cout<<" -> ";
     }
-
     cout<<"\nTong trong so = "<<d[dich]<<endl;
 }
 void Prim(DoThi g){
-
     bool daCo[MAX]={false};
     int Cay[MAX][MAX];
-
     for(int i=0;i<g.n;i++)
         for(int j=0;j<g.n;j++)
             Cay[i][j]=0;
  daCo[9]=true;          // Bat dau tu Hoa Binh
-
     cout<<"\nPRIM \n";
-
     int dem=0;
-
     while(dem<g.n-1){
-
         int Min=VC;
         int x=-1,y=-1;
-
         for(int i=0;i<g.n;i++){
             if(daCo[i]){
                 for(int j=0;j<g.n;j++){
@@ -145,41 +120,30 @@ void Prim(DoThi g){
                 }
             }
         }
-
         if(x==-1) break;
-
         cout<<"Lay canh: "
             <<TenTinh[x]
             <<" - "
             <<TenTinh[y]
             <<" = "
             <<Min<<endl;
-
         daCo[y]=true;
-
         Cay[x][y]=Min;
         Cay[y][x]=Min;
-
         dem++;
     }
-
     cout<<"\nMa tran cay khung Prim:\n";
     InMaTran(Cay,g.n);
-
 }
 
 int TimCha(int cha[],int x){
-
     while(cha[x]!=x)
         x=cha[x];
-
     return x;
 }
 void Kruskal(DoThi g){
-
     Canh ds[30];
     int m=0;
-
     for(int i=0;i<g.n;i++){
         for(int j=i+1;j<g.n;j++){
             if(g.a[i][j]>0){
@@ -201,40 +165,29 @@ void Kruskal(DoThi g){
     }
 
     int cha[MAX];
-
     for(int i=0;i<g.n;i++)
         cha[i]=i;
-
     int Cay[MAX][MAX];
-
     for(int i=0;i<g.n;i++)
         for(int j=0;j<g.n;j++)
             Cay[i][j]=0;
-
     cout<<"\n KRUSKAL\n";
 
     int dem=0;
      for(int i=0;i<m;i++){
-
         int r1=TimCha(cha,ds[i].dau);
         int r2=TimCha(cha,ds[i].cuoi);
-
         if(r1!=r2){
-
             cout<<"Lay canh: "
                 <<TenTinh[ds[i].dau]
                 <<" - "
                 <<TenTinh[ds[i].cuoi]
                 <<" = "
                 <<ds[i].ts<<endl;
-
             cha[r1]=r2;
-
             Cay[ds[i].dau][ds[i].cuoi]=ds[i].ts;
             Cay[ds[i].cuoi][ds[i].dau]=ds[i].ts;
-
             dem++;
-
             if(dem==g.n-1)
                 break;
         }
@@ -242,14 +195,10 @@ void Kruskal(DoThi g){
 
     cout<<"\nMa tran cay khung Kruskal:\n";
     InMaTran(Cay,g.n);
-
 }
 int main(){
-
     DoThi g;
-
     TaoDoThi(g,MAX);
-
     int data[][3]={
         {0,6,1},
         {6,7,2},
@@ -265,9 +214,7 @@ int main(){
         {4,5,12},
         {6,5,13}
     };
-
     int soCanh=sizeof(data)/sizeof(data[0]);
-
     for(int i=0;i<soCanh;i++){
         ThemCanh(g,
                  data[i][0],
@@ -277,13 +224,9 @@ int main(){
 
     cout<<" MA TRAN DO THI \n";
     InMaTran(g.a,g.n);
-
     cout<<"\nDIJKSTRA \n";
     Dijkstra(g);
-
     Prim(g);
-
     Kruskal(g);
-
     return 0;
 }
